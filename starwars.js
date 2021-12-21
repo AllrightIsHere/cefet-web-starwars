@@ -5,6 +5,7 @@
 //  - Quando um filme for clicado, exibir sua introdução
 
 import { play } from "./music.js"
+import { decimalToRoman } from "./roman.js"
 
 const API_ENDPOINT = 'https://swapi.dev/api'
 
@@ -16,3 +17,22 @@ const musica = {
 }
 
 play(musica, document.body);
+
+const filmes = await fetch(`${API_ENDPOINT}/films`)
+    .then(response => response.json())
+    .then(f => f.results)
+    .catch(e => console.log("Filmes não encontrados!"))
+
+const filmesUlEl = document.querySelector('#filmes ul');
+
+function preencherFilmes(filmes) {
+    filmesUlEl.innerHTML = '';
+
+    filmes.forEach(filme => {
+        const liEl = document.createElement('li');
+        liEl.innerHTML = `Episode ${decimalToRoman(filme.episode_id).padEnd(3, ' ')} - ${filme.title}`
+        filmesUlEl.appendChild(liEl);
+    });
+}
+
+preencherFilmes(filmes);
