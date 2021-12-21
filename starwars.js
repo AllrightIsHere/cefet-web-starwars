@@ -6,6 +6,7 @@
 
 import { play } from "./music.js"
 import { decimalToRoman } from "./roman.js"
+import { restartAnimation } from "./restart-animation.js"
 
 const API_ENDPOINT = 'https://swapi.dev/api'
 
@@ -30,7 +31,19 @@ function preencherFilmes(filmes) {
 
     filmes.forEach(filme => {
         const liEl = document.createElement('li');
-        liEl.innerHTML = `Episode ${decimalToRoman(filme.episode_id).padEnd(3, ' ')} - ${filme.title}`
+        const episode = decimalToRoman(filme.episode_id);
+        const title = filme.title;
+        liEl.innerHTML = `Episode ${episode.padEnd(3, ' ')} - ${title}`
+
+        liEl.addEventListener('click', (e) => {
+            const introEl = document.querySelector('pre.introducao');
+            introEl.innerHTML = `Episode ${episode}
+            ${title.toUpperCase()}
+            
+            ${filme.opening_crawl}`;
+
+            restartAnimation(introEl);
+        });
         filmesUlEl.appendChild(liEl);
     });
 }
