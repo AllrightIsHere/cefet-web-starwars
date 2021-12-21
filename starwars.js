@@ -7,6 +7,7 @@
 import { play } from "./music.js"
 import { decimalToRoman } from "./roman.js"
 import { restartAnimation } from "./restart-animation.js"
+import { friendlyFetch } from "./friendly-fetch.js"
 
 const API_ENDPOINT = 'https://swapi.dev/api'
 
@@ -19,11 +20,7 @@ const musica = {
 
 play(musica, document.body);
 
-const filmes = await fetch(`${API_ENDPOINT}/films`)
-    .then(response => response.json())
-    .then(f => f.results)
-    .catch(e => console.log("Filmes não encontrados!"))
-
+const filmes = await friendlyFetch(`${API_ENDPOINT}/films`)
 const filmesUlEl = document.querySelector('#filmes ul');
 
 function preencherFilmes(filmes) {
