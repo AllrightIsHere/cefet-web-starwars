@@ -48,4 +48,4 @@ function preencherFilmes(filmes) {
     });
 }
 
-preencherFilmes(filmes);
+preencherFilmes(filmes.sort((a, b) => a.episode_id - b.episode_id));
